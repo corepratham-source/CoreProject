@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "start": "vite preview --host 0.0.0.0 --port $PORT"
+    "start": "node -e \"require('child_process').spawn('vite', ['preview', '--host', '0.0.0.0', '--port', process.env.PORT], { stdio: 'inherit' })\""
   },
   "dependencies": {
     "axios": "^1.14.0",
