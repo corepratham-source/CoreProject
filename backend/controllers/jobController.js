@@ -2,7 +2,7 @@ import Job from "../models/Job.js";
 import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
-import { matchJobToCandidates } from "../services/matchJobtoCandidates.js";
+import { matchJobToCandidates } from "../services/matchJobToCandidates.js";
 
 export const createJob = async (req, res) => {
   const file = req.file;
