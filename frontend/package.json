@@ -18,6 +18,7 @@
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "react-router-dom": "^7.13.2",
+    "serve": "^14.2.6",
     "spire.doc": "^13.4.0",
     "spire.pdf": "^11.6.0"
   },
