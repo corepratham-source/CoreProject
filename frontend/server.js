@@ -14,7 +14,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
-
+console.log("Serving from:", path.join(__dirname, "dist"));
 const PORT = process.env.PORT || 3000;
 console.log(`Starting server on port ${PORT}...`);
 app.listen(PORT, "0.0.0.0", () => {
