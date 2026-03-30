@@ -70,7 +70,7 @@ export const matchJobsForCandidate = async (req, res) => {
       Email: ${candidate.email}
 
       Resume:
-      ${candidate.resumeText}
+      ${candidate.resumeURL ? candidate.resumeURL : "No resume URL available"}
 
       Matched Jobs:
       ${jobList}
