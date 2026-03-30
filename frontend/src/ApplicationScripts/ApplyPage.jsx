@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import api from "../api";
 import "./ApplyPage.css";
+import TnCPage from "./TnCPage";
 
 export default function ApplyPage() {
   const [messages, setMessages] = useState([
@@ -167,6 +168,7 @@ export default function ApplyPage() {
   return (
     <div className="container">
       <div className="appCard">
+        <TnCPage/>
         {/* Navbar */}
         <div className="navbar">
           <div className="logo">

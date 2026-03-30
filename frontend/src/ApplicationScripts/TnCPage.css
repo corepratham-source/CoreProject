@@ -1,0 +1,56 @@
+.tnc-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.tnc-modal {
+  width: 500px;
+  max-height: 100vh;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tnc-modal h2 {
+  margin-top: 0;
+  color : black;
+}
+
+.tnc-content {
+  height: 300px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.tnc-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.close-btn {
+  padding: 10px;
+  border: none;
+  background: black;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.close-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+}
