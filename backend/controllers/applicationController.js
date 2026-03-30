@@ -2,6 +2,7 @@ import Application from "../models/Application.js";
 import { extractResumeText } from "../services/resumeParser.js";
 import { matchCandidateToJobs } from "../services/matchCandidateToJobs.js";
 import { sendMail } from "../services/gmailService.js";
+import { uploadResumeToCloudinary } from "../services/uploadResume.js";
 import fs from "fs";
 
 export const createApplication = async (req, res) => {
@@ -9,6 +10,14 @@ export const createApplication = async (req, res) => {
   if (!file) {
     return res.status(400).json({ error: "Resume file is required" });
   }
+  let resUrl = null;
+
+    // 🔥 NEW: upload file if present
+    if (req.file) {
+      const uploadResult = await uploadResumeToCloudinary(req.file.path);
+      resUrl = uploadResult.url;
+    }
+
   const filePath = file.path;
   try {
     const resume = await extractResumeText(filePath);
@@ -19,7 +28,8 @@ export const createApplication = async (req, res) => {
       experience: req.body.experience,
       salary: req.body.salary,
       function: req.body.function,
-      resumeText: resume
+      resumeText: resume,
+      resumeURL: resUrl
     });
     res.status(201).json(application);
   } catch (err) {

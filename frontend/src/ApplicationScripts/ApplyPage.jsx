@@ -142,7 +142,7 @@ export default function ApplyPage() {
         }
       });
       const applicationId = res.data._id;
-      await api.post(`/applications/${applicationId}/match`);
+      await api.get(`/applications/${applicationId}/match`);
       setMessages((prev) => [
         ...prev,
         { 

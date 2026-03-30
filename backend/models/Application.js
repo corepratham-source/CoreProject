@@ -8,6 +8,7 @@ const applicationSchema = new mongoose.Schema({
   salary: Number,
   function: String,
   resumeText: String,
+  resumeURL: String,
 }, { timestamps: true });
 
 export default mongoose.model("Application", applicationSchema);
