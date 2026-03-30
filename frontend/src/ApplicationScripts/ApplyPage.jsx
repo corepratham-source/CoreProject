@@ -136,11 +136,13 @@ export default function ApplyPage() {
       formData.append("salary", Number(form.salary));
       formData.append("function", form.function);
       formData.append("resume", file);
-      await api.post("/applications/create-application", formData, {
+      const res = await api.post("/applications/create-application", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       });
+      const applicationId = res.data._id;
+      await api.post(`/applications/${applicationId}/match`);
       setMessages((prev) => [
         ...prev,
         { 

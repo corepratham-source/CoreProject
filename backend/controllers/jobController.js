@@ -3,6 +3,7 @@ import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
 import { matchJobToCandidates } from "../services/matchJobToCandidates.js";
+import { sendMail } from "../services/gmailService.js";
 
 export const createJob = async (req, res) => {
   const file = req.file;
