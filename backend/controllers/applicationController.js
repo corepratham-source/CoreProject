@@ -5,11 +5,15 @@ import { sendMail } from "../services/gmailService.js";
 import fs from "fs";
 
 export const createApplication = async (req, res) => {
-  await sendMail({
-    to: "prathamchiragghosh@gmail.com",
-    subject: "Test Mail",
-    text: "It works!"
-  });
+  try {
+    await sendMail({
+      to: "prathamchiragghosh@gmail.com",
+      subject: "Test Mail",
+      text: "It works!"
+    });
+  } catch (err) {
+    console.error("Mail failed:", err.message);
+  }
   const file = req.file;
   if (!file) {
     return res.status(400).json({ error: "Resume file is required" });
