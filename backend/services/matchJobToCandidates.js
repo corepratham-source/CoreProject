@@ -35,7 +35,7 @@ export const matchJobToCandidates = async (jobId) => {
   console.log(`After experience filter: ${candidates.length} candidates`);
 
   // 🔹 STEP 2: SALARY FILTER (skip if JD doesn't have it)
-  if (job.salaryMin != null || job.salaryMax != null) {
+  if (job.salaryMin != null || job.salaryMax != null || job.salaryMin != 0 || job.salaryMax != 0) {
     const [minSal, maxSal] = withTolerance(job.salaryMin, job.salaryMax);
 
     candidates = candidates.filter(c => {
