@@ -48,14 +48,15 @@ export default function TnCPage({ onAccept }) {
         <div className="tnc-content" ref={contentRef}>
           <p>
             By proceeding to upload your resume and details on this platform, you (“Candidate”) agree to the following terms and conditions:
+
         </p>
             <p>
             1. Platform Ownership & Role
 
-            This platform is owned and operated by the employer, and currently functions solely for the purpose of identifying and evaluating potential candidates for internal hiring requirements.
+            This platform is owned and operated by the employer, and currently functions solely for the purpose of identifying and evaluating potential candidates for hiring requirements.
 
             At this stage, we are the only employer on this platform, and no third-party employers have access to your data.
-
+            <br/>
             ---
         </p> 
         <br/>
@@ -67,7 +68,7 @@ export default function TnCPage({ onAccept }) {
             - No fees, charges, or payments are required at any stage of the recruitment process.
             - We do not charge candidates for registration, shortlisting, interviews, or job offers.
             - Any request for payment claiming to be on our behalf should be treated as fraudulent and reported immediately.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -87,7 +88,7 @@ export default function TnCPage({ onAccept }) {
             is accurate, truthful, and not misleading.
 
             You understand that any false or misleading information may lead to immediate disqualification without notice.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -103,7 +104,7 @@ export default function TnCPage({ onAccept }) {
             - Your inputs (such as “function”) being standardized or interpreted programmatically.
 
             This processing is solely for recruitment purposes.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -121,7 +122,7 @@ export default function TnCPage({ onAccept }) {
 
             - These are preliminary automated responses.
             - Final decisions are subject to human review and further assessment.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -137,7 +138,7 @@ export default function TnCPage({ onAccept }) {
             If not shortlisted:
 
             - Your profile may still be retained in our database for future opportunities.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -149,7 +150,7 @@ export default function TnCPage({ onAccept }) {
             - Your data being stored in our internal talent database from day one.
             - Your profile being considered for current and future roles.
             - Retention of your data unless you explicitly request deletion.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -158,9 +159,9 @@ export default function TnCPage({ onAccept }) {
 
             Your data will:
 
-            - Be used strictly for recruitment and internal hiring purposes.
+            - Be used strictly for recruitment and hiring purposes.
             - Not be sold, rented, or shared with unauthorized third parties.
-
+            <br/>
             ---
         </p>
         <br/>
@@ -174,7 +175,7 @@ export default function TnCPage({ onAccept }) {
             - Job offers
 
             All hiring decisions are at the sole discretion of the employer.
-
+              <br/>
             ---
         </p>
         <br/>
@@ -186,7 +187,7 @@ export default function TnCPage({ onAccept }) {
             - Not to impersonate another individual.
             - Not to upload malicious, irrelevant, or inappropriate content.
             - To maintain professionalism in all interactions.
-
+              <br/>
             ---
         </p>
         <br/>
@@ -197,7 +198,7 @@ export default function TnCPage({ onAccept }) {
 
             - Any indirect or consequential loss arising from use of the platform.
             - Delays or non-selection in the recruitment process.
-
+              <br/>
             ---
             </p>
             <br/>
@@ -207,7 +208,7 @@ export default function TnCPage({ onAccept }) {
             For any queries or concerns, you may contact:
 
             Email: rajiv.ghoshrajiv@gmail.com
-
+             <br/>
             ---
             </p>
             <br/>
@@ -218,7 +219,7 @@ export default function TnCPage({ onAccept }) {
 
             - You have read, understood, and accepted all the above terms.
             - You voluntarily consent to the use and processing of your data as described.
-
+              <br/>
             ---
           </p>
           <p style={{ marginTop: 200 }}>
