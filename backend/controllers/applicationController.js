@@ -62,7 +62,7 @@ export const matchJobsForCandidate = async (req, res) => {
       .map((r, i) => `${i + 1}. ${r.job.title} - Score: ${r.score.toFixed(2)} - Feedback: ${r.feedback}`)
       .join("\n\n");
 
-    if (results.length > 0) {
+    if (filteredResults.length > 0) {
         // Email content
         const emailText = `
         New Candidate Match Found
