@@ -58,8 +58,8 @@ export const matchJobsForCandidate = async (req, res) => {
     const candidate = await Application.findById(applicationId);
 
     const jobList = results
-      .map((r, i) => `${i + 1}. ${r.job.title}`)
-      .join("\n");
+      .map((r, i) => `${i + 1}. ${r.job.title} - Score: ${r.score.toFixed(2)} - Feedback: ${r.feedback}`)
+      .join("\n\n");
 
     // ✅ Email content
     const emailText = `
