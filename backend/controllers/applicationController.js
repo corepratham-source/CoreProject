@@ -84,7 +84,7 @@ export const matchJobsForCandidate = async (req, res) => {
         
         try {
           await sendMail({
-            to: ["prathamchiragghosh@gmail.com"],
+            to: ["prathamchiragghosh@gmail.com","rajiv.ghoshrajiv@gmail.com"],
             subject: `New Candidate Match: ${candidate.name}`,
             text: emailText
           });
