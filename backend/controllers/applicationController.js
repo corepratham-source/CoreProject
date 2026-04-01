@@ -12,7 +12,7 @@ export const createApplication = async (req, res) => {
   }
   let resUrl = null;
 
-    // 🔥 NEW: upload file if present
+    // NEW: upload file if present
     if (req.file) {
       const uploadResult = await uploadResumeToCloudinary(req.file.path);
       resUrl = uploadResult.url;
@@ -57,13 +57,13 @@ export const matchJobsForCandidate = async (req, res) => {
     const results = await matchCandidateToJobs(applicationId);
     const candidate = await Application.findById(applicationId);
 
-    const jobList = results
+    const filteredResults = results.filter(r => r.score >= 70);
+    const jobList = filteredResults
       .map((r, i) => `${i + 1}. ${r.job.title} - Score: ${r.score.toFixed(2)} - Feedback: ${r.feedback}`)
       .join("\n\n");
 
-
     if (results.length > 0) {
-        // ✅ Email content
+        // Email content
         const emailText = `
           New Candidate Match Found
 
