@@ -62,12 +62,12 @@ export const matchJobToCandidates = async (jobId) => {
   await Promise.all(
     candidates.map(async (candidate) => {
       try {
-        // ✅ Check cache first
+        // Check cache first
         const existing = await PairedScore.findOne({
           jobId,
           applicationId: candidate._id
         });
-
+        console.log("Existing score check:", { existing });
         if (existing) {
           results.push({
             candidate,
@@ -77,10 +77,10 @@ export const matchJobToCandidates = async (jobId) => {
           return;
         }
 
-        // 🔹 Score using LLM
+        // Score using LLM
         const { score, feedback } = await scoreResume(job, candidate.resumeText);
 
-        // 🔹 Save (avoid duplicates)
+        // Save (avoid duplicates)
         try {
           await PairedScore.create({
             jobId,
@@ -93,7 +93,7 @@ export const matchJobToCandidates = async (jobId) => {
         }
 
         results.push({ candidate, score, feedback });
-
+        console.log(results);
       } catch (err) {
         console.error("Scoring error:", err.message);
       }
