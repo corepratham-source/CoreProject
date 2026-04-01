@@ -21,6 +21,8 @@ export const parseJobDescription = async (text) => {
   const prompt = `
 You MUST return ONLY valid JSON.
 Function in this context means Sales, Marketing, Engineering, Manufacturing etc.
+Salary could be in any currency - convert to INR if possible.
+Salary could also be monthly or yearly - convert to yearly if possible.
 SYSTEM CONTEXT
 
 {
