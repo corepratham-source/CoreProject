@@ -259,7 +259,7 @@ export default function ApplyPage() {
         ...prev,
         {
           sender: "ai",
-          text: "Profile submitted successfully. We will reach out soon.",
+          text: "Profile submitted successfully.Should we find a suitable match, someone from our team will reach out within 24-48 hours.",
           time: now()
         }
       ]);

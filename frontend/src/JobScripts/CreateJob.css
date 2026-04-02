@@ -1,453 +1,177 @@
-/* GLOBAL */
-body {
-  margin: 0;
-  background: #f5f5f5;
-  font-family: Inter, Arial, sans-serif;
-}
-
-/* MAIN WRAPPER */
+/* 🔹 Page Background */
 .container {
-  height: 100vh;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa, #e4e9f2);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 40px;
 }
 
-/* APP CARD */
+/* 🔹 Main Card */
 .appCard {
   width: 900px;
-  height: 92vh;
-  background: white;
-  border-radius: 14px;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255,255,255,0.4);
 }
 
-/* NAVBAR */
+/* 🔹 Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
-  padding: 14px 22px;
-  background: white;
-  border-bottom: 2px solid #e11d2e;
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 18px;
-  color: #e11d2e;
-  letter-spacing: 1px;
+  align-items: center;
+  margin-bottom: 30px;
 }
 
 .logo img {
-  height: 32px;
-  object-fit: contain;
+  height: 40px;
 }
 
 .navButtons button {
   margin-left: 10px;
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
 }
 
 .login {
-  background: #6b6b6b;
-  color: white;
-  border: none;
-  transition: 0.2s;
-}
-
-.login:hover {
-  background: #4b4b4b;
-  transform: translateY(-1px);
+  background: #959597;
 }
 
 .signup {
-  background: #e11d2e;
+  background: #ef4444;
   color: white;
-  border: none;
-  transition: 0.2s;
 }
 
-.signup:hover {
-  background: #a9121f;
-  transform: translateY(-1px);
-}
-
-/* HEADER */
-.header {
-  text-align: center;
-  padding: 25px;
-  background: white;
-}
-
-.header h2 {
-  margin: 0;
-  color: #111;
-}
-
-.header p {
-  color: #6b7280;
-  font-size: 14px;
-}
-
-/* TOGGLE */
-.toggle {
-  margin-top: 12px;
-}
-
-.toggle button {
-  padding: 8px 14px;
-  border: 1px solid #ddd;
-  background: white;
-  margin: 0 5px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.toggle .active {
-  background: #e11d2e;
-  color: white;
-  border: none;
-}
-
-/* CHAT */
-.chat {
-  flex: 1;
-  padding: 30px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  scroll-behavior: smooth;
-}
-
-/* MESSAGE ROW */
-.row {
-  display: flex;
-}
-
-.row.user {
-  justify-content: flex-end;
-}
-
-.row.ai {
-  justify-content: flex-start;
-}
-
-/* CHAT BUBBLE */
-.bubble {
-  padding: 12px 16px;
-  border-radius: 14px;
-  max-width: 65%;
-  font-size: 14px;
-  position: relative;
-  animation: fadeInUp 0.3s ease;
-}
-
-.bubble.ai {
-  background: #cfcfcf;
-  color : black;
-}
-
-.bubble.user {
-  background: #e11d2e;
-  color: black;
-}
-
-/* TIME */
-.time {
-  font-size: 10px;
-  margin-top: 4px;
-}
-
-.bubble.ai .time {
-  text-align: left;
-  color: #6b7280;
-}
-
-.bubble.user .time {
-  text-align: right;
-  color: rgba(255,255,255,0.8);
-}
-
-/* UPLOAD BOX */
-.uploadBox {
-  background: #fff;
-  padding: 18px;
-  border-radius: 12px;
-  border: 2px dashed #e11d2e;
-  text-align: center;
-  transition: 0.2s;
-  animation: fadeInUp 0.3s ease;
-}
-
-.uploadBox:hover {
-  background: #fff5f5;
-}
-
-.uploadBox button {
-  margin-top: 10px;
-  padding: 8px 14px;
-  background: #e11d2e;
-  color: white;
-  border: none;
-  border-radius: 6px;
-}
-
-/* JOB CARD */
-.jobCard {
-  display: flex;
-  align-items: center;
-  background: white;
-  padding: 16px;
-  border-radius: 14px;
-  border: 1px solid #eee;
-  transition: 0.25s;
-  animation: fadeInUp 0.4s ease;
-}
-
-.jobCard:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.jobLeft {
-  width: 42px;
-  height: 42px;
-  background: #e11d2e;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  margin-right: 12px;
-  font-weight: bold;
-}
-
-.jobContent {
-  flex: 1;
-}
-
-.jobContent h4 {
-  margin: 0;
-}
-
-.jobContent p {
-  margin: 3px 0;
-  color: #555;
-}
-
-.salary {
-  color: #16a34a;
-  font-weight: bold;
-}
-
-/* BUTTON */
-.viewBtn {
-  background: #e11d2e;
-  color: white;
-  border: none;
-  padding: 8px 10px;
-  border-radius: 6px;
-  transition: 0.2s;
-}
-
-.viewBtn:hover {
-  background: #c51624;
-}
-
-/* INPUT */
-.inputBox {
-  display: flex;
-  padding: 12px;
-  background: white;
-  border-top: 1px solid #eee;
-}
-
-.inputBox input {
-  flex: 1;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  background: #fafafa;
-  color : #111;
-}
-
-.inputBox button {
-  margin-left: 10px;
-  padding: 12px 16px;
-  background: #e11d2e;
-  color: white;
-  border: none;
-  border-radius: 10px;
-}
-
-.inputBox input:focus {
-  border-color: #e11d2e;
-  box-shadow: 0 0 0 2px rgba(225,29,46,0.1);
-}
-
-.inputBox input::placeholder {
-  color: #9ca3af;
-}
-
-/* BUTTON INTERACTIONS */
-button {
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-button:hover {
-  transform: translateY(-1px);
-}
-
-button:active {
-  transform: scale(0.97);
-}
-
-/* TYPING DOTS */
-.dots::after {
-  content: '● ● ●';
-  animation: pulse 1.5s infinite;
-  letter-spacing: 3px;
-}
-
-/* ANIMATIONS */
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes pulse {
-  0% { opacity: 0.3; }
-  50% { opacity: 1; }
-  100% { opacity: 0.3; }
-}
-
-/* Hero */
+/* 🔹 Hero */
 .hero {
-  margin-top: 30px;
   text-align: center;
+  margin-bottom: 30px;
 }
 
 .hero h1 {
-  font-size: 28px;
-  color: #000000;
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #374151;
 }
 
 .hero p {
-  color: #94a3b8;
-  margin-top: 5px;
+  color: #6b7280;
+  font-size: 16px;
 }
 
-/* Upload Card */
+/* 🔹 Upload Card */
 .uploadCard {
-  margin-top: 30px;
-  background: #030f46;
-  border: 1px solid #1e293b;
-  border-radius: 12px;
-  padding: 30px;
   text-align: center;
-  width : 80%;
-  justify-content: center;
-  align-items: center;
-  align-self: center;
+  margin-bottom: 30px;
 }
 
-/* File Upload */
+/* 🔹 File Upload */
 .fileUpload {
   display: inline-block;
-  padding: 12px 20px;
-  border: 1px dashed #475569;
-  border-radius: 10px;
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4338ca;
   cursor: pointer;
-  color: #cbd5f5;
-  padding : 12px 20px;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.fileUpload:hover {
+  background: #e0e7ff;
 }
 
 .fileUpload input {
   display: none;
-  padding : 12px 20px;
 }
 
 .fileName {
   margin-top: 10px;
-  color: #94a3b8;
-  padding : 12px 20px;
+  color: #374151;
+  font-size: 14px;
 }
 
-/* Buttons */
-.primaryBtn {
-  margin-top: 20px;
-  padding: 12px 20px;
-  background: #3b82f6;
-  color: white;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-
-.primaryBtn:hover {
-  background: #2563eb;
-}
-
-.secondaryBtn {
-  margin-top: 10px;
-  padding: 10px 16px;
-  background: #1e293b;
-  color: #e2e8f0;
-  border-radius: 8px;
-  border: none;
-  cursor: pointer;
-}
-
-/* Result */
-.resultCard {
+/* 🔹 Chips Container */
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
   margin-top: 25px;
-  background: #020617;
-  border: 1px solid #1e293b;
-  padding: 20px;
+}
+
+/* 🔹 Chips */
+.chip {
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+/* Hover effect */
+.chip:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+/* Active chip */
+.chip.active {
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  border: none;
+  box-shadow: 0 10px 25px rgba(99,102,241,0.4);
+  transform: scale(1.05);
+}
+
+/* 🔹 Primary Button */
+.primaryBtn {
+  margin-top: 30px;
+  padding: 14px 24px;
+  width: 20%;
   border-radius: 12px;
-  text-align: center;
-  width : 82%;
+  border: none;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s;
   align-items: center;
   align-self: center;
 }
 
-/* Candidates */
-.candidates {
-  margin-top: 30px;
+/* Hover */
+.primaryBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99,102,241,0.4);
 }
 
-.candidateCard {
-  background: #020617;
-  border: 1px solid #1e293b;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
+/* Disabled */
+.primaryBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.name {
-  font-weight: bold;
-  color: #f8fafc;
-}
-
-.score {
-  color: #22c55e;
-}
-
-.feedback {
-  color: #94a3b8;
+.fileUpload {
+  display: inline-block;
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: #eef2ff;
+  color: #4338ca;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s;
+  align-items: center;
+  align-self: center;
 }

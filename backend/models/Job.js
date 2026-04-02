@@ -9,7 +9,24 @@ const jobSchema = new mongoose.Schema({
   experienceMax: Number,
   salaryMin: Number,
   salaryMax: Number,
-  function: String,
+  function: {
+    type: String,
+    enum: [
+      "Sales & Business Development",
+      "Marketing & Brand",
+      "Finance & Accounts",
+      "Human Resources (HR)",
+      "Operations & Supply Chain",
+      "Manufacturing / Engineering",
+      "Procurement & Sourcing",
+      "Technology / IT / Data",
+      "Quality & Compliance",
+      "Customer Service & Support",
+      "Administration & Facilities",
+      "Strategy & Leadership"
+    ]
+  },
+
   formFields: [
     {
       label: { type: String },

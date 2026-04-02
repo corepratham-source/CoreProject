@@ -3,10 +3,10 @@ import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
 import { matchJobToCandidates } from "../services/matchJobToCandidates.js";
-import { sendMail } from "../services/gmailService.js";
 
 export const createJob = async (req, res) => {
   const file = req.file;
+  const selectedFunction = req.body.function;
   if (!file) {
     return res.status(400).json({ error: "Job description file is required" });
   }
@@ -38,7 +38,9 @@ export const createJob = async (req, res) => {
         function: null
       };
     }
-
+    if (selectedFunction) {
+      parsed.function = selectedFunction;
+    }
     // Step 3: Save to DB once with all data
     const job = await Job.create({
       ...parsed,
