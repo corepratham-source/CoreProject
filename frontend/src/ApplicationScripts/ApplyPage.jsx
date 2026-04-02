@@ -176,7 +176,7 @@ export default function ApplyPage() {
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
-          { sender: "ai", text: "Please upload your resume (PDF/DOC)", time: now() }
+          { sender: "ai", text: "Please upload your resume (DOCX/DOC)", time: now() }
         ]);
       }, 300);
 
@@ -337,7 +337,7 @@ export default function ApplyPage() {
           {/* Upload */}
           {step === 7 && (
             <div className="uploadBox">
-              <input type="file" onChange={handleFile} />
+              <input type="file" accept=".doc,.docx" onChange={handleFile} />
               <button onClick={handleUpload} disabled={loading}>
                 {loading ? "Uploading..." : "Upload Resume"}
               </button>
