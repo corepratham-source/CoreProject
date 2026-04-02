@@ -4,6 +4,112 @@ import "./ApplyPage.css";
 import TnCPage from "./TnCPage";
 
 export default function ApplyPage() {
+
+  const FUNCTION_MAP = {
+    "Sales & Business Development": [
+      "Key Account Management",
+      "Channel / Distribution Sales",
+      "B2B / Institutional Sales",
+      "B2C / Retail Sales",
+      "Business Development",
+      "Territory / Area Sales",
+      "Inside Sales"
+    ],
+    "Marketing & Brand": [
+      "Digital Marketing",
+      "Brand Management",
+      "Product Marketing",
+      "Performance Marketing",
+      "Market Research & Insights",
+      "Trade Marketing",
+      "Content & Communication"
+    ],
+    "Finance & Accounts": [
+      "Financial Accounting",
+      "Taxation",
+      "Audit & Compliance",
+      "FP&A",
+      "Controllership",
+      "Treasury",
+      "MIS & Reporting"
+    ],
+    "Human Resources (HR)": [
+      "Talent Acquisition",
+      "HRBP",
+      "L&D",
+      "Compensation & Benefits",
+      "Payroll",
+      "Employee Relations",
+      "HR Analytics"
+    ],
+    "Operations & Supply Chain": [
+      "Supply Chain Management",
+      "Logistics & Transportation",
+      "Warehouse Management",
+      "Demand / Supply Planning",
+      "Inventory Management",
+      "Distribution",
+      "Order Fulfillment"
+    ],
+    "Manufacturing / Engineering": [
+      "Production / Operations",
+      "Maintenance",
+      "Industrial Engineering",
+      "Process Engineering",
+      "Plant Management",
+      "Lean / Six Sigma",
+      "Project Execution"
+    ],
+    "Procurement & Sourcing": [
+      "Strategic Sourcing",
+      "Vendor Development",
+      "Purchase Operations",
+      "Contract Management",
+      "Costing & Negotiation",
+      "Import / Export"
+    ],
+    "Technology / IT / Data": [
+      "Software Development",
+      "IT Infrastructure",
+      "Data Analytics",
+      "Cybersecurity",
+      "Cloud / DevOps",
+      "ERP Systems",
+      "AI / Machine Learning"
+    ],
+    "Quality & Compliance": [
+      "Quality Assurance",
+      "Quality Control",
+      "Regulatory Compliance",
+      "Audits",
+      "Process Quality",
+      "EHS"
+    ],
+    "Customer Service & Support": [
+      "Customer Support",
+      "After-Sales Service",
+      "Client Servicing",
+      "Technical Support",
+      "Complaint Resolution",
+      "Service Operations"
+    ],
+    "Administration & Facilities": [
+      "Office Administration",
+      "Facilities Management",
+      "Travel Coordination",
+      "Security",
+      "General Administration"
+    ],
+    "Strategy & Leadership": [
+      "Business Strategy",
+      "Corporate Planning",
+      "Consulting",
+      "Business Transformation",
+      "Program Management",
+      "CEO Office"
+    ]
+  };
+
   const [messages, setMessages] = useState([
     {
       sender: "ai",
@@ -26,28 +132,18 @@ export default function ApplyPage() {
     email: "",
     experience: "",
     salary: "",
-    function: "",
-    resumeText: ""
+    functionCategory: "",
+    subFunction: ""
   });
 
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [jobs, setJobs] = useState([]);
 
   const chatRef = useRef(null);
 
-  const FUNCTIONS = [
-    "Sales",
-    "Accounting",
-    "Marketing",
-    "Engineering",
-    "HR",
-    "Operations"
-  ];
-
   useEffect(() => {
     chatRef.current?.scrollTo(0, chatRef.current.scrollHeight);
-  }, [messages, jobs]);
+  }, [messages]);
 
   const now = () =>
     new Date().toLocaleTimeString([], {
@@ -55,14 +151,46 @@ export default function ApplyPage() {
       minute: "2-digit"
     });
 
+  const handleChipClick = (value) => {
+    setMessages((prev) => [
+      ...prev,
+      { sender: "user", text: value, time: now() }
+    ]);
+
+    if (step === 5) {
+      setForm((prev) => ({ ...prev, functionCategory: value }));
+
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          { sender: "ai", text: "Great. Now select your sub-function:", time: now() }
+        ]);
+      }, 300);
+
+      setStep(6);
+    }
+
+    else if (step === 6) {
+      setForm((prev) => ({ ...prev, subFunction: value }));
+
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          { sender: "ai", text: "Please upload your resume (PDF/DOC)", time: now() }
+        ]);
+      }, 300);
+
+      setStep(7);
+    }
+  };
+
   const sendMessage = () => {
     if (!input) return;
 
-    const updatedMessages = [
-      ...messages,
+    setMessages((prev) => [
+      ...prev,
       { sender: "user", text: input, time: now() }
-    ];
-    setMessages(updatedMessages);
+    ]);
 
     let reply = "";
 
@@ -78,23 +206,18 @@ export default function ApplyPage() {
 
     } else if (step === 2) {
       setForm((prev) => ({ ...prev, email: input }));
-      reply = "How many years of experience do you have?";
+      reply = "How many years of experience do you have? For example, for 2 years say 2, for 6 months say 0.5";
       setStep(3);
 
     } else if (step === 3) {
       setForm((prev) => ({ ...prev, experience: input }));
-      reply = "What is your expected salary? Give us a single value - For example for 24LPA, just say 24.";
+      reply = "What is your expected annual salary? For example, for 5 LPA say 5";
       setStep(4);
 
     } else if (step === 4) {
       setForm((prev) => ({ ...prev, salary: input }));
-      reply = `Which function are you in? (${FUNCTIONS.join(", ")})`;
+      reply = "Please select your function below:";
       setStep(5);
-
-    } else if (step === 5) {
-      setForm((prev) => ({ ...prev, function: input }));
-      reply = "Please upload your resume (PDF/DOC)";
-      setStep(6);
     }
 
     setTimeout(() => {
@@ -102,7 +225,7 @@ export default function ApplyPage() {
         ...prev,
         { sender: "ai", text: reply, time: now() }
       ]);
-    }, 500);
+    }, 400);
 
     setInput("");
   };
@@ -112,56 +235,37 @@ export default function ApplyPage() {
   };
 
   const handleUpload = async () => {
-    if (!file) return alert("Please upload a resume");
+    if (!file) return alert("Upload resume");
 
     setLoading(true);
 
-    setMessages((prev) => [
-      ...prev,
-      {
-        sender: "ai",
-        text: "Analyzing your profile...",
-        time: now(),
-        typing: true
-      }
-    ]);
-
     try {
-      
       const formData = new FormData();
       formData.append("name", form.name);
       formData.append("phone", form.phone);
       formData.append("email", form.email);
       formData.append("experience", Number(form.experience));
       formData.append("salary", Number(form.salary));
-      formData.append("function", form.function);
+      formData.append("functionCategory", form.functionCategory);
+      formData.append("subFunction", form.subFunction);
       formData.append("resume", file);
-      const res = await api.post("/applications/create-application", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      });
-      const applicationId = res.data._id;
-      await api.get(`/applications/${applicationId}/match`);
-      setMessages((prev) => [
-        ...prev,
-        { 
-          sender: "ai", 
-          text: "We've now got your profile ready! Should our system find any good matches, our team will reach out to you within 24-48 hours. Thank you for applying!", 
-          time: now() 
-        }
-      ]);
 
-    } catch (err) {
+      const res = await api.post("/applications/create-application", formData);
+
+      const id = res.data._id;
+      await api.get(`/applications/${id}/match`);
 
       setMessages((prev) => [
         ...prev,
         {
           sender: "ai",
-          text: "Something went wrong while analyzing your profile.",
+          text: "Profile submitted successfully. We will reach out soon.",
           time: now()
         }
       ]);
+
+    } catch {
+      alert("Error submitting");
     }
 
     setLoading(false);
@@ -170,7 +274,8 @@ export default function ApplyPage() {
   return (
     <div className="container">
       <div className="appCard">
-        <TnCPage/>
+        <TnCPage />
+
         {/* Navbar */}
         <div className="navbar">
           <div className="logo">
@@ -193,14 +298,44 @@ export default function ApplyPage() {
           {messages.map((msg, i) => (
             <div key={i} className={`row ${msg.sender}`}>
               <div className={`bubble ${msg.sender}`}>
-                {msg.typing ? <span className="dots"></span> : msg.text}
+                {msg.text}
                 <div className="time">{msg.time}</div>
               </div>
             </div>
           ))}
 
-          {/* Resume Upload */}
+          {/* Function Chips */}
+          {step === 5 && (
+            <div className="chipContainer">
+              {Object.keys(FUNCTION_MAP).map((func) => (
+                <button
+                  key={func}
+                  className={`chip ${form.functionCategory === func ? "selected" : ""}`}
+                  onClick={() => handleChipClick(func)}
+                >
+                  {func}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Sub-function Chips */}
           {step === 6 && (
+            <div className="chipContainer">
+              {FUNCTION_MAP[form.functionCategory].map((sub) => (
+                <button
+                  key={sub}
+                  className={`chip ${form.subFunction === sub ? "selected" : ""}`}
+                  onClick={() => handleChipClick(sub)}
+                >
+                  {sub}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {/* Upload */}
+          {step === 7 && (
             <div className="uploadBox">
               <input type="file" onChange={handleFile} />
               <button onClick={handleUpload} disabled={loading}>
@@ -208,25 +343,10 @@ export default function ApplyPage() {
               </button>
             </div>
           )}
-
-          {/* Job Results */}
-          {jobs.map((job, i) => (
-            <div key={i} className="jobCard">
-              <div className="jobLeft">C</div>
-              <div className="jobContent">
-                <h4>{job.company || "Company"}</h4>
-                <p>{job.title || "Role"} • {job.location || "Location"}</p>
-                <span className="salary">
-                  {job.salary || "Salary not disclosed"}
-                </span>
-              </div>
-              <button className="viewBtn">View & Consent</button>
-            </div>
-          ))}
         </div>
 
         {/* Input */}
-        {step < 6 && (
+        {step < 5 && (
           <div className="inputBox">
             <input
               value={input}
@@ -237,7 +357,6 @@ export default function ApplyPage() {
             <button onClick={sendMessage}>➤</button>
           </div>
         )}
-
       </div>
     </div>
   );

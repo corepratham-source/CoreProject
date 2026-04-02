@@ -7,6 +7,7 @@ const applicationSchema = new mongoose.Schema({
   experience: Number,
   salary: Number,
   function: String,
+  subFunction: String,
   resumeText: String,
   resumeURL: String,
 }, { timestamps: true });

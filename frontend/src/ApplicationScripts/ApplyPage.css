@@ -336,3 +336,66 @@ button:active {
   100% { opacity: 0.3; }
 }
 
+/* Container for chips */
+.chipContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0;
+}
+
+/* Base chip */
+.chip {
+  padding: 10px 16px;
+  border-radius: 20px;
+  border: 1px solid #e0e0e0;
+  background: #ffffff;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+/* Hover effect */
+.chip:hover {
+  background: #f5f7ff;
+  border-color: #4a6cf7;
+  color: #4a6cf7;
+  transform: translateY(-1px);
+}
+
+/* Active click */
+.chip:active {
+  transform: scale(0.95);
+}
+
+/* Selected chip (IMPORTANT) */
+.chip.selected {
+  background: #4a6cf7;
+  color: #fff;
+  border-color: #4a6cf7;
+  box-shadow: 0 4px 12px rgba(74, 108, 247, 0.3);
+}
+
+/* Subtle animation when appearing */
+.chip {
+  animation: fadeInUp 0.3s ease;
+}
+
+/* Disabled state for old chips */
+.chip.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
