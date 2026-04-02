@@ -27,7 +27,8 @@ export const createApplication = async (req, res) => {
       email: req.body.email,
       experience: req.body.experience,
       salary: req.body.salary,
-      function: req.body.function,
+      function: req.body.functionCategory,
+      subFunction: req.body.subFunction,
       resumeText: resume,
       resumeURL: resUrl
     });
