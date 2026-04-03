@@ -88,7 +88,7 @@ export default function JobDashboard() {
         <div className="modalOverlay" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3>{selectedJob.title}</h3>
-            <p className="jdText">{selectedJob.description}</p>
+            <pre className="jdText">{selectedJob.description}</pre>
 
             <button className="closeBtn" onClick={closeModal}>
               Close
@@ -141,7 +141,7 @@ export default function JobDashboard() {
             <h3>{selectedResume.name}'s Resume</h3>
 
             <div className="resumeContent">
-                {selectedResume.resumeText || "No resume text available"}
+                <pre>{selectedResume.resumeText || "No resume text available"}</pre>
             </div>
 
             {selectedResume.resumeUrl && (

@@ -93,6 +93,7 @@
   margin-top: 15px;
   line-height: 1.6;
   opacity: 0.9;
+  text-align: left;
 }
 
 /* CANDIDATES */
@@ -112,6 +113,8 @@
   padding: 10px;
   border-radius: 8px;
   cursor: pointer;
+  width: 20%;
+  align-self: center;
 }
 
 .resumeBtn {
@@ -147,6 +150,7 @@
   line-height: 1.5;
   font-size: 14px;
   border: 1px solid #334155;
+  text-align: left;
 }
 
 /* Download link */

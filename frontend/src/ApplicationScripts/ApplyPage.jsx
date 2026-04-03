@@ -338,7 +338,7 @@ export default function ApplyPage() {
           {/* Upload */}
           {step === 7 && (
             <div className="uploadBox">
-              <input type="file" accept=".doc,.docx" onChange={handleFile} />
+              <input type="file" accept=".doc,.docx,.pdf" onChange={handleFile} />
               <button onClick={handleUpload} disabled={loading}>
                 {loading ? "Uploading..." : "Upload Resume"}
               </button>
