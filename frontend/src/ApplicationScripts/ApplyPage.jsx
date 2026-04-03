@@ -280,6 +280,7 @@ export default function ApplyPage() {
         <div className="navbar">
           <div className="logo">
             <img src="https://res.cloudinary.com/dwnzd0c2t/image/upload/v1774591468/coreLogo_xpqd8n.png" alt="Core Logo" />
+            <div className="beta-badge">BETA</div>
           </div>
           <div className="navButtons">
             <button className="login">Login</button>
