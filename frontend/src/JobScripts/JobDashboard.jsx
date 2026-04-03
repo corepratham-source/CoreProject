@@ -58,6 +58,7 @@ export default function JobDashboard() {
       <div className="jobGrid">
         {jobs.map((job) => (
           <div key={job._id} className="jobCardRow">
+            <p key={job._created_at}>{job._created_at}</p>
 
             {/* LEFT SIDE */}
             <div className="jobInfo">
@@ -133,12 +134,13 @@ export default function JobDashboard() {
           </div>
         </div>
       )}
-
+      {/*RESUME MODAL*/}
       {selectedResume && (
         <div className="modalOverlay" onClick={() => setSelectedResume(null)}>
             <div className="modal resumeModal" onClick={(e) => e.stopPropagation()}>
             
             <h3>{selectedResume.name}'s Resume</h3>
+            <h4>Created at : {selectedResume._created_at}</h4>
 
             <div className="resumeContent">
                 <pre>{selectedResume.resumeText || "No resume text available"}</pre>

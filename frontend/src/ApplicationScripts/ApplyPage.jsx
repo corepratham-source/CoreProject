@@ -176,7 +176,7 @@ export default function ApplyPage() {
       setTimeout(() => {
         setMessages((prev) => [
           ...prev,
-          { sender: "ai", text: "Please upload your resume (DOCX/DOC)", time: now() }
+          { sender: "ai", text: "Please upload your resume (DOCX/DOC/PDF)", time: now() }
         ]);
       }, 300);
 
