@@ -1,5 +1,5 @@
 import Job from "../models/Job.js";
-import PairedScore from "../models/PairedScore.js";
+import PairedScore from "../models/PairedScores.js";
 import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
