@@ -6,41 +6,37 @@ export default function JobDashboard() {
   const [jobs, setJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState(null);
   const [candidates, setCandidates] = useState([]);
+  const [showJD, setShowJD] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // 🔹 Fetch all jobs
   useEffect(() => {
     const fetchJobs = async () => {
-      try {
-        const res = await api.get("/jobs");
-        setJobs(res.data);
-      } catch (err) {
-        console.error(err);
-      }
+      const res = await api.get("/jobs/all");
+      setJobs(res.data);
     };
-
     fetchJobs();
   }, []);
 
-  // 🔹 Fetch candidates
   const openCandidates = async (job) => {
-    try {
-      setSelectedJob(job);
-      setLoading(true);
+    setSelectedJob(job);
+    setLoading(true);
 
-      const res = await api.get(`/applications/${job._id}/top`);
-      setCandidates(res.data);
+    const res = await api.get(`/jobs/${job._id}/match`);
+    const data = res.data;
+    setCandidates(Array.isArray(data) ? data : data.matches || []);
 
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(false);
+  };
+
+  const openJD = (job) => {
+    setSelectedJob(job);
+    setShowJD(true);
   };
 
   const closeModal = () => {
     setSelectedJob(null);
     setCandidates([]);
+    setShowJD(false);
   };
 
   return (
@@ -49,19 +45,47 @@ export default function JobDashboard() {
 
       <div className="jobGrid">
         {jobs.map((job) => (
-          <div key={job._id} className="jobCard">
-            <h3>{job.title}</h3>
-            <p className="desc">{job.description.slice(0, 120)}...</p>
+          <div key={job._id} className="jobCardRow">
 
-            <button onClick={() => openCandidates(job)}>
-              View Top Candidates
-            </button>
+            {/* LEFT SIDE */}
+            <div className="jobInfo">
+              <h3>{job.title}</h3>
+              <p className="meta">
+                {job.experience || "Experience not specified"}
+              </p>
+            </div>
+
+            {/* RIGHT SIDE BUTTONS */}
+            <div className="jobActions">
+              <button onClick={() => openJD(job)} className="jdBtn">
+                View JD
+              </button>
+
+              <button onClick={() => openCandidates(job)}>
+                View Top Candidates
+              </button>
+            </div>
+
           </div>
         ))}
       </div>
 
-      {/* MODAL */}
-      {selectedJob && (
+      {/* 🔥 JD MODAL */}
+      {showJD && selectedJob && (
+        <div className="modalOverlay" onClick={closeModal}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h3>{selectedJob.title}</h3>
+            <p className="jdText">{selectedJob.description}</p>
+
+            <button className="closeBtn" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 🔥 CANDIDATES MODAL */}
+      {selectedJob && !showJD && (
         <div className="modalOverlay" onClick={closeModal}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h3>{selectedJob.title} - Candidates</h3>

@@ -10,51 +10,64 @@
   margin-bottom: 20px;
 }
 
+/* 🔥 ROW STYLE */
 .jobGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.jobCard {
+.jobCardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background: #1e293b;
   padding: 20px;
   border-radius: 12px;
-  transition: 0.3s;
   border: 1px solid transparent;
+  transition: 0.3s;
 }
 
-.jobCard:hover {
+.jobCardRow:hover {
   border: 1px solid #38bdf8;
-  transform: translateY(-5px);
 }
 
-.jobCard h3 {
-  margin-bottom: 10px;
+/* LEFT */
+.jobInfo h3 {
+  margin: 0;
 }
 
-.desc {
+.meta {
+  opacity: 0.6;
   font-size: 14px;
-  opacity: 0.7;
-  margin-bottom: 15px;
 }
 
-.jobCard button {
+/* RIGHT */
+.jobActions {
+  display: flex;
+  gap: 10px;
+}
+
+.jobActions button {
   background: #38bdf8;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 14px;
   border-radius: 8px;
   cursor: pointer;
-  color: black;
   font-weight: bold;
+  color: black;
 }
 
-.jobCard button:hover {
-  background: #0ea5e9;
+.jdBtn {
+  background: #64748b;
+  color: white;
 }
 
-/* 🔥 MODAL */
+.jobActions button:hover {
+  opacity: 0.85;
+}
 
+/* MODAL */
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -76,18 +89,22 @@
   overflow-y: auto;
 }
 
+.jdText {
+  margin-top: 15px;
+  line-height: 1.6;
+  opacity: 0.9;
+}
+
+/* CANDIDATES */
 .candidateCard {
   background: #0f172a;
   padding: 15px;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   border: 1px solid #334155;
 }
 
-.candidateCard p {
-  margin: 5px 0;
-}
-
+/* CLOSE BUTTON */
 .closeBtn {
   margin-top: 15px;
   background: red;

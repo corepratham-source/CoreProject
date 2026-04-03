@@ -79,7 +79,8 @@ export const matchCandidatesForJob = async (req, res) => {
         name: r.candidate.name,
         email: r.candidate.email,
         score: r.score,
-        feedback: r.feedback
+        feedback: r.feedback,
+        resumeUrl: r.candidate.resumeUrl
       }))
     });
 
