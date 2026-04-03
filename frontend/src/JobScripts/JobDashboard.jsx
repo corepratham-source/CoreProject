@@ -39,6 +39,17 @@ export default function JobDashboard() {
     setShowJD(false);
   };
 
+  const removeJob = async (job) => {
+    if (!window.confirm("Are you sure you want to delete this job?")) return;
+    try {
+      await api.delete(`/jobs/${job._id}`);
+      setJobs(jobs.filter((j) => j._id !== job._id));
+    } catch (err) {
+      console.error("Error deleting job:", err);
+    }
+  };
+
+
   return (
     <div className="dashboard">
       <h2 className="title">Job Dashboard</h2>
@@ -50,19 +61,20 @@ export default function JobDashboard() {
             {/* LEFT SIDE */}
             <div className="jobInfo">
               <h3>{job.title}</h3>
-              <p className="meta">
-                {job.experience || "Experience not specified"}
-              </p>
             </div>
 
             {/* RIGHT SIDE BUTTONS */}
             <div className="jobActions">
               <button onClick={() => openJD(job)} className="jdBtn">
-                View JD
+                View Job
               </button>
 
               <button onClick={() => openCandidates(job)}>
                 View Top Candidates
+              </button>
+
+              <button onClick={() => removeJob(job)}>
+                Delete Job
               </button>
             </div>
 
