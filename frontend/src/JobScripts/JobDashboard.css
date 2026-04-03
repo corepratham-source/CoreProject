@@ -113,3 +113,51 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.resumeBtn {
+  background: #22c55e;
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.resumeBtn:hover {
+  opacity: 0.85;
+}
+
+/* Resume Modal Special */
+.resumeModal {
+  width: 700px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Scrollable resume text */
+.resumeContent {
+  margin-top: 15px;
+  background: #0f172a;
+  padding: 15px;
+  border-radius: 10px;
+  overflow-y: auto;
+  max-height: 400px;
+  line-height: 1.5;
+  font-size: 14px;
+  border: 1px solid #334155;
+}
+
+/* Download link */
+.downloadLink {
+  margin-top: 15px;
+  display: inline-block;
+  color: #38bdf8;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.downloadLink:hover {
+  text-decoration: underline;
+}

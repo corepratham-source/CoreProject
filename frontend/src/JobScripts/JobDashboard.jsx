@@ -8,6 +8,7 @@ export default function JobDashboard() {
   const [candidates, setCandidates] = useState([]);
   const [showJD, setShowJD] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [selectedResume, setSelectedResume] = useState(null);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -113,9 +114,12 @@ export default function JobDashboard() {
                   <p><b>Email:</b> {c.email}</p>
                   <p>
                     <b>Resume:</b>{" "}
-                    <a href={c.resumeUrl} target="_blank" rel="noreferrer">
-                      View Resume
-                    </a>
+                    <button
+                    className="resumeBtn"
+                    onClick={() => setSelectedResume(c)}
+                    >
+                    View Resume
+                    </button>
                   </p>
                   <p><b>Score:</b> {c.score}</p>
                   <p><b>Reason:</b> {c.feedback}</p>
@@ -129,6 +133,34 @@ export default function JobDashboard() {
           </div>
         </div>
       )}
+
+      {selectedResume && (
+        <div className="modalOverlay" onClick={() => setSelectedResume(null)}>
+            <div className="modal resumeModal" onClick={(e) => e.stopPropagation()}>
+            
+            <h3>{selectedResume.name}'s Resume</h3>
+
+            <div className="resumeContent">
+                {selectedResume.resumeText || "No resume text available"}
+            </div>
+
+            {selectedResume.resumeUrl && (
+                <a
+                href={selectedResume.resumeUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="downloadLink"
+                >
+                Download Resume
+                </a>
+            )}
+
+            <button className="closeBtn" onClick={() => setSelectedResume(null)}>
+                Close
+            </button>
+            </div>
+        </div>
+        )}
     </div>
   );
 }
