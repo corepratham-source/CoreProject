@@ -140,7 +140,6 @@ export default function JobDashboard() {
             <div className="modal resumeModal" onClick={(e) => e.stopPropagation()}>
             
             <h3>{selectedResume.name}'s Resume</h3>
-            <h4>Created at : {selectedResume._created_at}</h4>
 
             <div className="resumeContent">
                 <pre>{selectedResume.resumeText || "No resume text available"}</pre>
