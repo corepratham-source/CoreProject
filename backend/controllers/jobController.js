@@ -1,4 +1,5 @@
 import Job from "../models/Job.js";
+import PairedScore from "../models/PairedScore.js";
 import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
@@ -108,7 +109,7 @@ export const deleteJob = async (req, res) => {
     if (!job) {
       return res.status(404).json({ error: "Job not found" });
     }
-    
+
     await PairedScore.deleteMany({ jobId });
     res.json({
       message: "Job deleted successfully",
