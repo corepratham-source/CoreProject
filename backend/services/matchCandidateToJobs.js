@@ -32,13 +32,13 @@ export const matchCandidateToJobs = async (applicationId) => {
 
   // 🔹 SALARY FILTER (skip if JD missing)
   jobs = jobs.filter(job => {
-    if (candidate.salary == null || candidate.salary == 0) return true;
+    if (candidate.expectedSalary == null || candidate.expectedSalary == 0) return true;
     if (job.salaryMin == null || job.salaryMax == null || job.salaryMin <= 0 || job.salaryMax <= 0) return true;
 
     const [minSal, maxSal] = withTolerance(job.salaryMin, job.salaryMax);
 
-    if (minSal != null && candidate.salary < minSal) return false;
-    if (maxSal != null && candidate.salary > maxSal) return false;
+    if (minSal != null && candidate.expectedSalary < minSal) return false;
+    if (maxSal != null && candidate.expectedSalary > maxSal) return false;
 
     return true;
   });

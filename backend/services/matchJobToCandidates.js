@@ -4,7 +4,7 @@ import PairedScore from "../models/PairedScores.js";
 import { scoreResume } from "./scoringService.js";
 
 /**
- * Utility → range with 15% tolerance
+ * Utility → range with 30% tolerance
  */
 const withTolerance = (min, max) => {
   if (min == null && max == null) return [null, null];
@@ -39,9 +39,9 @@ export const matchJobToCandidates = async (jobId) => {
     const [minSal, maxSal] = withTolerance(job.salaryMin, job.salaryMax);
 
     candidates = candidates.filter(c => {
-      if (c.salary == null) return true;
-      if (minSal != null && c.salary < minSal) return false;
-      if (maxSal != null && c.salary > maxSal) return false;
+      if (c.expectedSalary == null) return true;
+      if (minSal != null && c.expectedSalary < minSal) return false;
+      if (maxSal != null && c.expectedSalary > maxSal) return false;
       return true;
     });
   }
