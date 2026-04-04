@@ -10,9 +10,6 @@ export const createApplication = async (req, res) => {
   if (!file) {
     return res.status(400).json({ error: "Resume file is required" });
   }
-  // if (!file.originalname.match(/\.(doc|docx)$/)) {
-  //   return res.status(400).json({ error: "Only DOC/DOCX files allowed" });
-  // }
   let resUrl = null;
 
     // NEW: upload file if present

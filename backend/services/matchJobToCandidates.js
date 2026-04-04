@@ -9,8 +9,8 @@ import { scoreResume } from "./scoringService.js";
 const withTolerance = (min, max) => {
   if (min == null && max == null) return [null, null];
 
-  const tolMin = min != null ? min * 0.85 : null;
-  const tolMax = max != null ? max * 1.15 : null;
+  const tolMin = min != null ? min * 0.70 : null;
+  const tolMax = max != null ? max * 1.30 : null;
 
   return [tolMin, tolMax];
 };
