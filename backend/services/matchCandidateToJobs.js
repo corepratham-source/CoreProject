@@ -30,8 +30,6 @@ export const matchCandidateToJobs = async (applicationId) => {
     return true;
   });
 
-  console.log(`After experience filter: ${jobs.length} jobs`);
-
   // 🔹 SALARY FILTER (skip if JD missing)
   jobs = jobs.filter(job => {
     if (candidate.salary == null || candidate.salary == 0) return true;
@@ -45,7 +43,6 @@ export const matchCandidateToJobs = async (applicationId) => {
     return true;
   });
 
-  console.log(`After salary filter: ${jobs.length} jobs`);
 
   // 🔹 FUNCTION FILTER
   if (candidate.function) {
@@ -54,7 +51,6 @@ export const matchCandidateToJobs = async (applicationId) => {
     );
   }
 
-  console.log(`After function filter: ${jobs.length} jobs`);
 
   // 🔥 LLM SCORING
   const results = [];

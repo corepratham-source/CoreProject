@@ -32,7 +32,7 @@ export const matchJobToCandidates = async (jobId) => {
       return true;
     });
   }
-  console.log(`After experience filter: ${candidates.length} candidates`);
+
 
   // 🔹 STEP 2: SALARY FILTER (skip if JD doesn't have it)
   if (job.salaryMin != null || job.salaryMax != null || job.salaryMin > 0 || job.salaryMax > 0) {
@@ -46,7 +46,6 @@ export const matchJobToCandidates = async (jobId) => {
     });
   }
 
-  console.log(`After salary filter: ${candidates.length} candidates`);
 
   // 🔹 STEP 3: FUNCTION FILTER
   if (job.function) {
@@ -54,7 +53,7 @@ export const matchJobToCandidates = async (jobId) => {
       !c.function || c.function.toLowerCase() === job.function.toLowerCase()
     );
   }
-  console.log(`After function filter: ${candidates.length} candidates`);
+
 
   // 🔥 STEP 4: LLM SCORING (only filtered candidates)
   const results = [];
@@ -67,7 +66,6 @@ export const matchJobToCandidates = async (jobId) => {
           jobId,
           applicationId: candidate._id
         });
-        console.log("Existing score check:", { existing });
         if (existing) {
           results.push({
             candidate,
@@ -93,7 +91,6 @@ export const matchJobToCandidates = async (jobId) => {
         }
 
         results.push({ candidate, score, feedback });
-        console.log(results);
       } catch (err) {
         console.error("Scoring error:", err.message);
       }
