@@ -26,7 +26,11 @@ const jobSchema = new mongoose.Schema({
       "Strategy & Leadership"
     ]
   },
-
+  recruiterId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
   formFields: [
     {
       label: { type: String },

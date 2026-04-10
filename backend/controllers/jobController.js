@@ -47,6 +47,7 @@ export const createJob = async (req, res) => {
     const job = await Job.create({
       ...parsed,
       description,
+      recruiterId: req.user.id,
       formFields: [
         { label: "Full Name", type: "text", required: true },
         { label: "Email", type: "email", required: true },
@@ -140,6 +141,18 @@ export const deleteJob = async (req, res) => {
 
   } catch (err) {
     console.error("Delete job error:", err);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const getMyJobs = async (req, res) => {
+  try {
+    const jobs = await Job.find({
+      recruiterId: req.user.id
+    }).sort({ createdAt: -1 });
+
+    res.json(jobs);
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
