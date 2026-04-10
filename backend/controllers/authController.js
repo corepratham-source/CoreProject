@@ -46,8 +46,8 @@ export const login = async (req, res) => {
     // ✅ COOKIE SET
     res.cookie("token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production", // IMPORTANT
-      sameSite: "lax", // better for cross-origin
+      secure: true,          // 🔥 MUST (Railway = HTTPS)
+      sameSite: "none",      // 🔥 CRITICAL FIX
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
 
