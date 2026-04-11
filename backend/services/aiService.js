@@ -23,6 +23,8 @@ You MUST return ONLY valid JSON.
 Function in this context means Sales, Marketing, Engineering, Manufacturing etc.
 Salary could be in any currency - convert to INR if possible.
 Salary could also be monthly or yearly - convert to yearly if possible.
+Salary could also be not in LPA - convert to LPA if possible. Example - 50000 per month should be converted to 6 LPA.
+Experience should be in years. If experience is given in months, convert to years.
 SYSTEM CONTEXT
 
 {
