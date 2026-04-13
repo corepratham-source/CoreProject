@@ -38,7 +38,7 @@ export const login = async (req, res) => {
     if (!match) return res.status(400).json({ error: "Invalid password" });
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { id: user._id, email: user.email, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
@@ -52,6 +52,41 @@ export const login = async (req, res) => {
     });
 
     res.json({ message: "Logged in" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// ADMIN LOGIN
+export const adminLogin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const user = await User.findOne({ email });
+    if (!user) return res.status(400).json({ error: "User not found" });
+
+    if (user.role !== "admin") {
+      return res.status(403).json({ error: "Not an admin" });
+    }
+
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(400).json({ error: "Invalid password" });
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 7 * 24 * 60 * 60 * 1000
+    });
+
+    res.json({ message: "Admin logged in" });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

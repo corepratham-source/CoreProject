@@ -1,5 +1,6 @@
 import StagingJob from "../models/StagingJob.js";
 import Job from "../models/Job.js";
+import User from "../models/User.js";
 
 // GET ALL STAGING JDs
 export const getStagingJobs = async (req, res) => {
@@ -34,6 +35,26 @@ export const approveJob = async (req, res) => {
       message: "Job approved",
       job: newJob
     });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const addAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    const user = await User.create({
+      name: "Admin",
+      email,
+      password: hashed,
+      role: "admin"
+    });
+
+    res.json({ message: "Admin created" });
 
   } catch (err) {
     res.status(500).json({ error: err.message });

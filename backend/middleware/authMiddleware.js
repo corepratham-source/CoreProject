@@ -17,8 +17,8 @@ export const protect = (req, res, next) => {
 };
 
 export const adminOnly = (req, res, next) => {
-  if (req.user.email !== "prathamchiragghosh@gmail.com") {
-    return res.status(403).json({ error: "Admin only" });
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ error: "Admin access only" });
   }
   next();
 };
