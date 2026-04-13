@@ -15,3 +15,10 @@ export const protect = (req, res, next) => {
     return res.status(401).json({ error: "Invalid token" });
   }
 };
+
+export const adminOnly = (req, res, next) => {
+  if (req.user.email !== "prathamchiragghosh@gmail.com") {
+    return res.status(403).json({ error: "Admin only" });
+  }
+  next();
+};

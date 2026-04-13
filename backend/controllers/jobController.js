@@ -1,4 +1,5 @@
 import Job from "../models/Job.js";
+import StagingJob from "../models/StagingJob.js";
 import PairedScore from "../models/PairedScores.js";
 import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
@@ -44,7 +45,7 @@ export const createJob = async (req, res) => {
       parsed.function = selectedFunction;
     }
     // Step 3: Save to DB once with all data
-    const job = await Job.create({
+    const job = await StagingJob.create({
       ...parsed,
       description,
       recruiterId: req.user.id,
