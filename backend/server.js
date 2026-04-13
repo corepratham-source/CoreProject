@@ -9,6 +9,7 @@ import cookieParser from "cookie-parser";
 import jobRoutes from "./routes/jobRoutes.js";
 import applicationRoutes from "./routes/applicationRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 const app = express();
 
@@ -58,6 +59,7 @@ app.use((req, res, next) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/jobs", jobRoutes);
 app.use("/api/applications", applicationRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ✅ Health check (helps Railway debugging)
 app.get("/", (req, res) => {
