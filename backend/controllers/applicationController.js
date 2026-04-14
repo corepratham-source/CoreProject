@@ -69,19 +69,29 @@ export const matchJobsForCandidate = async (req, res) => {
     if (filteredResults.length > 0) {
         // Email content
         const generateChartUrl = (score) => {
-  return `https://quickchart.io/chart?c={
-    type:'doughnut',
-    data:{
-      datasets:[{
-        data:[${score}, ${100 - score}],
-        backgroundColor:['#22c55e','#e5e7eb']
-      }]
+  const rounded = Math.round(score);
+
+  const chartConfig = {
+    type: "doughnut",
+    data: {
+      datasets: [
+        {
+          data: [rounded, 100 - rounded],
+          backgroundColor: ["#16a34a", "#e5e7eb"]
+        }
+      ]
     },
-    options:{
-      cutout:'70%',
-      plugins:{legend:{display:false}}
+    options: {
+      cutout: "70%",
+      plugins: {
+        legend: { display: false }
+      }
     }
-  }`;
+  };
+
+  return `https://quickchart.io/chart?c=${encodeURIComponent(
+    JSON.stringify(chartConfig)
+  )}`;
 };
 
 const jobCards = filteredResults.map((r, i) => `
