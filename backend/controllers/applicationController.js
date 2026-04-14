@@ -10,19 +10,23 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export const createApplication = async (req, res) => {
   const file = req.file;
   if (!file) {
+    console.warn("[ApplicationController] WARNING: No resume file provided");
     return res.status(400).json({ error: "Resume file is required" });
   }
   let resUrl = null;
-
-    // NEW: upload file if present
+  try {
+    console.log("[ApplicationController] INFO: Uploading resume to Cloudinary");
     if (req.file) {
       const uploadResult = await uploadResumeToCloudinary(req.file.path);
       resUrl = uploadResult.url;
+      console.log("[ApplicationController] INFO: Resume uploaded successfully");
     }
 
-  const filePath = file.path;
-  try {
+    const filePath = file.path;
+    console.log("[ApplicationController] INFO: Extracting resume text");
     const resume = await extractResumeText(filePath);
+    console.log("[ApplicationController] INFO: Resume text extracted, length:", resume?.length || 0);
+    console.log("[ApplicationController] INFO: Creating application in DB");
     const application = await Application.create({
       name: req.body.name,
       phone: req.body.phone,
@@ -35,8 +39,12 @@ export const createApplication = async (req, res) => {
       resumeText: resume,
       resumeURL: resUrl
     });
+
+    console.log("[ApplicationController] INFO: Application created successfully, ID:", application._id);
     res.status(201).json(application);
   } catch (err) {
+    console.error("[ApplicationController] ERROR: Failed to create application:", err.message);
+    console.error("[ApplicationController] STACK:", err.stack);
     console.error("Create application error:", err);
     res.status(500).json({ error: err.message });
   }
@@ -44,9 +52,9 @@ export const createApplication = async (req, res) => {
     if (filePath && fs.existsSync(filePath)) {
       fs.unlink(filePath, (err) => {
         if (err) {
-          console.error("File delete error:", err.message);
+          console.error("[ApplicationController] ERROR: Failed to delete temp file:", err.message);
         } else {
-          console.log("Temp file deleted:", filePath);
+          console.log("[ApplicationController] INFO: Temp file deleted:", filePath);
         }
       });
     }
@@ -55,19 +63,19 @@ export const createApplication = async (req, res) => {
 
 
 export const matchJobsForCandidate = async (req, res) => {
+  console.log("[ApplicationController] INFO: matchJobsForCandidate called, applicationId:", req.params.applicationId);
   try {
     const { applicationId } = req.params;
-
+    console.log("[ApplicationController] INFO: Matching jobs for candidate:", applicationId);
+    console.log("[ApplicationController] INFO: Running matchCandidateToJobs");
     const results = await matchCandidateToJobs(applicationId);
+    console.log("[ApplicationController] INFO: Match results count:", results.length);
     const candidate = await Application.findById(applicationId);
 
     const filteredResults = results.filter(r => r.score >= 70);
-    const jobList = filteredResults
-      .map((r, i) => `${i + 1}. ${r.job.title} - Score: ${r.score.toFixed(2)} - Feedback: ${r.feedback}`)
-      .join("\n\n");
-
+    console.log("[ApplicationController] INFO: Filtered results (score >= 70):", filteredResults.length);
     if (filteredResults.length > 0) {
-        // Email content
+        console.log("[ApplicationController] INFO: Sending match email with jobs");
         const generateChartUrl = (score) => {
   const rounded = Math.round(score);
 
@@ -158,12 +166,13 @@ const emailHtml = `
             subject: `New Candidate Match: ${candidate.name}`,
             html: emailHtml
           });
+        console.log("[ApplicationController] INFO: Match email sent successfully");
       } catch (err) {
-        console.error("Mail failed:", err.message);
+        console.error("[ApplicationController] ERROR: Failed to send match email:", err.message);
       }
     }
     if (filteredResults.length == 0) {
-        // Email content
+        console.log("[ApplicationController] INFO: No strong matches found, sending notification email");
         const emailHtml = `
 <div style="font-family:Arial,sans-serif;background:#f9fafb;padding:24px;">
 
@@ -203,19 +212,19 @@ const emailHtml = `
 `;
         
         try {
-          const response = await resend.emails.send({
+          await resend.emails.send({
             from: "Core Team <no-reply@careersatcore.com>",
             to: ["prathamchiragghosh@gmail.com","rajiv.ghoshrajiv@gmail.com"],
             subject: `New Candidate: ${candidate.name}`,
             html: emailHtml
           });
-          console.log("Resend response:", response);
+          console.log("[ApplicationController] INFO: Candidate notification email sent");
       } catch (err) {
-        console.error("Mail failed:", err.message);
+        console.error("[ApplicationController] ERROR: Failed to send candidate notification email:", err.message);
       }
     }
 
-
+    console.log("[ApplicationController] INFO: Returning match results");
     res.json({
       count: results.length,
       matches: results.map(r => ({
@@ -227,7 +236,8 @@ const emailHtml = `
     });
 
   } catch (err) {
-    console.error("Candidate match error:", err);
+    console.error("[ApplicationController] ERROR: Candidate match error:", err.message);
+    console.error("[ApplicationController] STACK:", err.stack);
     res.status(500).json({ error: err.message });
   }
 };
