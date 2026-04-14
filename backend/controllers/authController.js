@@ -8,7 +8,16 @@ console.log("[AuthController] INFO: Auth controller loaded");
 export const signup = async (req, res) => {
   console.log("[AuthController] INFO: signup called with email:", req.body?.email);
   try {
-    const { name, email, password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone,
+      companyName,
+      companyType,
+      companySize,
+      companyRole
+    } = req.body;
 
     if (!email || !password || !name) {
       console.warn("[AuthController] WARNING: Missing required fields");
@@ -26,7 +35,12 @@ export const signup = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password: hashed
+      password: hashed,
+      phone,
+      companyName,
+      companyType,
+      companySize,
+      companyRole
     });
     console.log("[AuthController] INFO: User created successfully, ID:", user._id);
     res.json({ message: "User created" });
