@@ -9,11 +9,12 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const createApplication = async (req, res) => {
   const file = req.file;
+  let filePath = null;
+  let resUrl = null;
   if (!file) {
     console.warn("[ApplicationController] WARNING: No resume file provided");
     return res.status(400).json({ error: "Resume file is required" });
   }
-  let resUrl = null;
   try {
     console.log("[ApplicationController] INFO: Uploading resume to Cloudinary");
     if (req.file) {
@@ -22,7 +23,7 @@ export const createApplication = async (req, res) => {
       console.log("[ApplicationController] INFO: Resume uploaded successfully");
     }
 
-    const filePath = file.path;
+    filePath = file.path;
     console.log("[ApplicationController] INFO: Extracting resume text");
     const resume = await extractResumeText(filePath);
     console.log("[ApplicationController] INFO: Resume text extracted, length:", resume?.length || 0);
