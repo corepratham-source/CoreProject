@@ -163,7 +163,7 @@ const emailHtml = `
         try {
           await resend.emails.send({
             from: "Core Team <no-reply@careersatcore.com>",
-            to: ["prathamchiragghosh@gmail.com","rajiv.ghoshrajiv@gmail.com"],
+            to: ["prathamchiragghosh@gmail.com"],
             subject: `New Candidate Match: ${candidate.name}`,
             html: emailHtml
           });
