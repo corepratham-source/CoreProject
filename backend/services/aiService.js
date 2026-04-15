@@ -24,6 +24,7 @@ Function in this context means Sales, Marketing, Engineering, Manufacturing etc.
 Salary could be in any currency - convert to INR if possible.
 Salary could also be monthly or yearly - convert to yearly if possible.
 Salary could also be not in LPA - convert to LPA if possible. Example - 50000 per month should be converted to 6 LPA.
+Salary should compulsorily be in LPA and yearly. If you cannot find salary information, return null for both salaryMin and salaryMax.
 Experience should be in years. If experience is given in months, convert to years.
 SYSTEM CONTEXT
 
