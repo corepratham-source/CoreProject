@@ -41,6 +41,27 @@ export const approveJob = async (req, res) => {
   }
 };
 
+export const rejectJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const stagingJob = await StagingJob.findById(jobId);
+    if (!stagingJob) {
+      return res.status(404).json({ error: "Job not found" });
+    }
+    // 1. DELETE from staging
+    await StagingJob.findByIdAndDelete(jobId);
+
+    res.json({
+      message: "Job rejected and deleted from staging",
+      job: stagingJob
+    });
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 export const addAdmin = async (req, res) => {
   try {
     const { email, password } = req.body;
