@@ -7,7 +7,7 @@ const pairedScoreSchema = new mongoose.Schema({
   feedback: String
 }, { timestamps: true });
 
-// 🔥 Prevent duplicates (VERY IMPORTANT)
+// Prevent duplicates (VERY IMPORTANT)
 pairedScoreSchema.index({ jobId: 1, applicationId: 1 }, { unique: true });
 
 export default mongoose.model("PairedScore", pairedScoreSchema);

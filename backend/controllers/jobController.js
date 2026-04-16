@@ -7,6 +7,30 @@ import { extractResumeText } from "../services/resumeParser.js";
 import { matchJobToCandidates } from "../services/matchJobToCandidates.js";
 import { Resend } from "resend";
 
+const extractAndNormalizeSalary = (value) => {
+    if (!value) return "";
+
+    let str = value.toString().toLowerCase().replace(/,/g, "").trim();
+
+    const match = str.match(/\d+(\.\d+)?/);
+    if (!match) return "";
+
+    let num = parseFloat(match[0]);
+
+    // If already in LPA format
+    if (str.includes("lpa") || str.includes("lac") || str.includes("lakh")) {
+      return num;
+    }
+
+    // If value looks like full INR (no label)
+    if (num >= 100000) {
+      return num / 100000; // convert to LPA
+    }
+
+    // Already small → assume LPA
+    return num;
+  };
+
 export const createJob = async (req, res) => {
   const file = req.file;
   const resend = new Resend(process.env.RESEND_API_KEY);
@@ -45,6 +69,9 @@ export const createJob = async (req, res) => {
     if (selectedFunction) {
       parsed.function = selectedFunction;
     }
+
+    parsed.salaryMin = extractAndNormalizeSalary(parsed.salaryMin);
+    parsed.salaryMax = extractAndNormalizeSalary(parsed.salaryMax);
     // Step 3: Save to DB once with all data
     const job = await StagingJob.create({
       ...parsed,
