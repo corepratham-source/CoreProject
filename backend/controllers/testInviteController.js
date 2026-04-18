@@ -1,6 +1,6 @@
 import { generateTestToken } from "../services/testToken.js";
 import { Resend } from "resend";
-
+const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendTestLink = async (req, res) => {
   try {
     const { candidateId, jobId, email } = req.body;
@@ -14,15 +14,15 @@ export const sendTestLink = async (req, res) => {
       <p>Best of luck!</p>
     `;
     try {
-              await resend.emails.send({
-                from: "Core Team <no-reply@careersatcore.com>",
-                to: [email],
-                subject: `Test Invitation`,
-                html: emailHtml
-              });
-          } catch (err) {
-            console.error("Mail failed:", err.message);
-          } 
+        await resend.emails.send({
+          from: "Core Team <no-reply@careersatcore.com>",
+          to: [email],
+          subject: `Test Invitation`,
+          html: emailHtml
+        });
+    } catch (err) {
+      console.error("Mail failed:", err.message);
+    } 
 
     res.json({ message: "Test link sent", link });
 
