@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import Test from "../models/Test.js";
-import TestResult from "../models/TestResult.js";
+import TestResult from "../models/TestResults.js";
 
 // ✅ GET TEST (via token)
 export const getTestByToken = async (req, res) => {
