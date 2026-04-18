@@ -1,4 +1,5 @@
 import { generateTestToken } from "../services/testToken.js";
+import { Resend } from "resend";
 
 export const sendTestLink = async (req, res) => {
   try {
