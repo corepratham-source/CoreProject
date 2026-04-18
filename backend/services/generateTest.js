@@ -8,8 +8,13 @@ const groq = new Groq({
 });
 
 const MODELS = [
-  "llama-3.3-70b-versatile",
-  "llama-3.1-8b-instant"
+    "llama-3.3-70b-versatile",
+    "moonshotai/kimi-k2-instruct",
+    "moonshotai/kimi-k2-instruct-0905",
+    "openai/gpt-oss-20b",
+    "meta-llama/llama-4-scout-17b-16e-instruct",
+    "allam-2-7b",
+    "llama-3.1-8b-instant",
 ];
 
 export const generateTestFromJD = async (job) => {
