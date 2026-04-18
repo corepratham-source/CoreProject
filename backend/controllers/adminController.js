@@ -34,7 +34,7 @@ export const approveJob = async (req, res) => {
     // 2. DELETE STAGING
     await StagingJob.findByIdAndDelete(jobId);
 
-    // 3. GENERATE TEST USING FINAL JOB (CORRECT ID)
+    // 3. GENERATE TEST USING FINAL JOB
     let questions = [];
 
     try {
@@ -43,19 +43,31 @@ export const approveJob = async (req, res) => {
       console.error("Test generation failed:", err.message);
     }
 
-    // 4. STORE TEST WITH CORRECT jobId
+    // 4. STORE TEST WITH FIXED ANSWER FORMAT
     if (questions.length > 0) {
       try {
         await Test.create({
           jobId: newJob._id,
           title: `${newJob.title} Assessment`,
-          questions: questions.map(q => ({
-            question: q.question,
-            options: q.options,
-            correctAnswer: q.correctAnswer,
-            marks: 1
-          }))
+          questions: questions.map(q => {
+            
+            let correctValue = q.correctAnswer;
+
+            // Convert A/B/C/D → actual option
+            if (["A", "B", "C", "D"].includes(correctValue)) {
+              const index = correctValue.charCodeAt(0) - 65;
+              correctValue = q.options[index];
+            }
+
+            return {
+              question: q.question,
+              options: q.options,
+              correctAnswer: correctValue,
+              marks: 1
+            };
+          })
         });
+
       } catch (err) {
         console.error("Test save failed:", err.message);
       }
