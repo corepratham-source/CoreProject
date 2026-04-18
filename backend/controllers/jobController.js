@@ -1,10 +1,12 @@
 import Job from "../models/Job.js";
 import StagingJob from "../models/StagingJob.js";
 import PairedScore from "../models/PairedScores.js";
+import Test from "../models/Test.js";
 import fs from "fs";
 import { parseJobDescription } from "../services/aiService.js";
 import { extractResumeText } from "../services/resumeParser.js";
 import { matchJobToCandidates } from "../services/matchJobToCandidates.js";
+import { generateTestFromJD } from "../services/generateTest.js";
 import { Resend } from "resend";
 
 const extractAndNormalizeSalary = (value) => {
@@ -83,6 +85,33 @@ export const createJob = async (req, res) => {
         { label: "Resume", type: "file", required: true }
       ]
     });
+      // STEP 4: GENERATE TEST USING AI
+      let questions = [];
+
+      try {
+        questions = await generateTestFromJD(job);
+      } catch (err) {
+        console.error("Test generation failed:", err.message);
+      }
+
+      // STEP 5: STORE TEST
+      if (questions.length > 0) {
+        try {
+          await Test.create({
+            jobId: job._id,
+            title: `${job.title} Assessment`,
+            questions: questions.map(q => ({
+              question: q.question,
+              options: q.options,
+              correctAnswer: q.correctAnswer,
+              marks: 1
+            }))
+          });
+        } catch (err) {
+          console.error("Test save failed:", err.message);
+        }
+      }
+
     res.status(201).json(job);
 
     const emailHtml = `
