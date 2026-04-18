@@ -1,12 +1,14 @@
 import { generateTestToken } from "../services/testToken.js";
 import { Resend } from "resend";
+import Application from "../models/Application.js";
 const resend = new Resend(process.env.RESEND_API_KEY);
 export const sendTestLink = async (req, res) => {
   try {
     const { candidateId, jobId, email } = req.body;
 
     const token = generateTestToken(candidateId, jobId);
-
+    const application = await Application.findOne({ candidateId });
+    const name = application ? application.name : null;
     const link = `${process.env.FRONTEND_URL}/test?token=${token}`;
     const emailHtml = `
   <div style="font-family: Arial, sans-serif; background-color: #f5f7fa; padding: 30px;">
