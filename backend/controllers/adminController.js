@@ -1,6 +1,9 @@
 import StagingJob from "../models/StagingJob.js";
 import Job from "../models/Job.js";
 import User from "../models/User.js";
+import Test from "../models/Test.js";
+import bcrypt from "bcrypt";
+import { generateTestFromJD } from "../services/generateTest.js";
 
 // GET ALL STAGING JDs
 export const getStagingJobs = async (req, res) => {
@@ -22,17 +25,44 @@ export const approveJob = async (req, res) => {
       return res.status(404).json({ error: "Job not found" });
     }
 
-    // 1. MOVE → create in actual Job
+    // 1. CREATE FINAL JOB
     const newJob = await Job.create({
       ...stagingJob.toObject(),
-      _id: undefined // prevent duplicate ID
+      _id: undefined
     });
 
-    // 2. DELETE from staging
+    // 2. DELETE STAGING
     await StagingJob.findByIdAndDelete(jobId);
 
+    // 3. GENERATE TEST USING FINAL JOB (CORRECT ID)
+    let questions = [];
+
+    try {
+      questions = await generateTestFromJD(newJob);
+    } catch (err) {
+      console.error("Test generation failed:", err.message);
+    }
+
+    // 4. STORE TEST WITH CORRECT jobId
+    if (questions.length > 0) {
+      try {
+        await Test.create({
+          jobId: newJob._id,
+          title: `${newJob.title} Assessment`,
+          questions: questions.map(q => ({
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.correctAnswer,
+            marks: 1
+          }))
+        });
+      } catch (err) {
+        console.error("Test save failed:", err.message);
+      }
+    }
+
     res.json({
-      message: "Job approved",
+      message: "Job approved + test created",
       job: newJob
     });
 
