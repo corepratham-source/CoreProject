@@ -200,7 +200,11 @@ export const deleteJob = async (req, res) => {
 export const getMyJobs = async (req, res) => {
   try {
     const jobs = await Job.find({
-      recruiterId: req.user.id
+      $or: [
+        { recruiterId: req.user.id },
+        { recruiterId: { $exists: false } }, // no recruiterId field
+        { recruiterId: null } // explicitly null
+      ]
     }).sort({ createdAt: -1 });
 
     res.json(jobs);
