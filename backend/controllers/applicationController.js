@@ -137,6 +137,7 @@ const emailHtml = `
     <h3 style="margin-bottom:8px;">Candidate</h3>
     <p style="margin:4px 0;"><strong>Name:</strong> ${candidate.name}</p>
     <p style="margin:4px 0;"><strong>Email:</strong> ${candidate.email}</p>
+    <p style="margin:4px 0;"><strong>Phone:</strong> ${candidate.phone}</p>
 
     <div style="margin:16px 0;">
       <a href="${candidate.resumeURL || '#'}"
@@ -185,6 +186,7 @@ const emailHtml = `
 
     <p><strong>Name:</strong> ${candidate.name}</p>
     <p><strong>Email:</strong> ${candidate.email}</p>
+    <p><strong>Phone:</strong> ${candidate.phone}</p>
     <p><strong>Experience:</strong> ${candidate.experience} years</p>
     <p><strong>Current Salary:</strong> ${candidate.currentSalary} LPA</p>
     <p><strong>Expected Salary:</strong> ${candidate.expectedSalary} LPA</p>
