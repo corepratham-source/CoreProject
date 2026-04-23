@@ -9,6 +9,11 @@ const applicationSchema = new mongoose.Schema({
   expectedSalary: Number,
   function: String,
   subFunction: String,
+  noticePeriod: Number,
+  currentLocation: String,
+  pincode: String,
+  openToRelocation: Boolean,
+
   resumeText: String,
   resumeURL: String,
 }, { timestamps: true });

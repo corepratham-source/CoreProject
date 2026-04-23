@@ -37,6 +37,10 @@ export const createApplication = async (req, res) => {
       expectedSalary: req.body.expectedSalary,
       function: req.body.functionCategory,
       subFunction: req.body.subFunction,
+      noticePeriod: req.body.noticePeriod,
+      currentLocation: req.body.currentLocation,
+      pincode: req.body.pincode,
+      openToRelocation: req.body.openToRelocation,
       resumeText: resume,
       resumeURL: resUrl
     });
@@ -138,6 +142,10 @@ const emailHtml = `
     <p style="margin:4px 0;"><strong>Name:</strong> ${candidate.name}</p>
     <p style="margin:4px 0;"><strong>Email:</strong> ${candidate.email}</p>
     <p style="margin:4px 0;"><strong>Phone:</strong> ${candidate.phone}</p>
+    <p style="margin:4px 0;"><strong>Notice Period:</strong> ${candidate.noticePeriod} days</p>
+    <p style="margin:4px 0;"><strong>Current Location:</strong> ${candidate.currentLocation}</p>
+    <p style="margin:4px 0;"><strong>Pincode:</strong> ${candidate.pincode}</p>
+    <p style="margin:4px 0;"><strong>Open to Relocation:</strong> ${candidate.openToRelocation ? 'Yes' : 'No'}</p>
 
     <div style="margin:16px 0;">
       <a href="${candidate.resumeURL || '#'}"
@@ -190,6 +198,10 @@ const emailHtml = `
     <p><strong>Experience:</strong> ${candidate.experience} years</p>
     <p><strong>Current Salary:</strong> ${candidate.currentSalary} LPA</p>
     <p><strong>Expected Salary:</strong> ${candidate.expectedSalary} LPA</p>
+    <p><strong>Notice Period:</strong> ${candidate.noticePeriod} days</p>
+    <p><strong>Current Location:</strong> ${candidate.currentLocation}</p>
+    <p><strong>Pincode:</strong> ${candidate.pincode}</p>
+    <p><strong>Open to Relocation:</strong> ${candidate.openToRelocation ? 'Yes' : 'No'}</p>
     <p><strong>Function:</strong> ${candidate.function}</p>
     <p><strong>Sub-Function:</strong> ${candidate.subFunction}</p>
 
