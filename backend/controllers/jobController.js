@@ -148,16 +148,20 @@ export const matchCandidatesForJob = async (req, res) => {
     const results = await matchJobToCandidates(jobId);
 
     res.json({
-      count: results.length,
-      matches: results.map(r => ({
-        applicationId: r.candidate._id,
-        name: r.candidate.name,
-        email: r.candidate.email,
-        score: r.score,
-        feedback: r.feedback,
-        resumeUrl: r.candidate.resumeURL,
-        resumeText: r.candidate.resumeText
-      }))
+      count: results.filter(r => r.score >= 70).length,
+      matches: results
+        .filter(r => r.score >= 70)
+        .map(r => ({
+          applicationId: r.candidate._id,
+          name: r.candidate.name,
+          email: r.candidate.email,
+          salary: r.candidate.currentSalary,
+          notice: r.candidate.noticePeriod,
+          score: r.score,
+          feedback: r.feedback,
+          resumeUrl: r.candidate.resumeURL,
+          resumeText: r.candidate.resumeText
+        }))
     });
 
   } catch (err) {
