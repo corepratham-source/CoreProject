@@ -1,11 +1,12 @@
 import cloudinary from "./cloudinary.js";
 
-export const uploadResumeToCloudinary = async (filePath) => {
+export const uploadToCloudinary = async (filePath, folder = "resumes") => {
   try {
     const result = await cloudinary.uploader.upload(filePath, {
-      folder: "resumes",
-      resource_type: "raw", // 🔥 IMPORTANT for PDFs/DOCX
+      folder,
+      resource_type: "raw", // supports PDF/DOCX
     });
+
     return {
       url: result.secure_url,
       public_id: result.public_id,

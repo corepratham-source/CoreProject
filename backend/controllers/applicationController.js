@@ -1,7 +1,7 @@
 import Application from "../models/Application.js";
 import { extractResumeText } from "../services/resumeParser.js";
 import { matchCandidateToJobs } from "../services/matchCandidateToJobs.js";
-import { uploadResumeToCloudinary } from "../services/uploadResume.js";
+import { uploadToCloudinary  } from "../services/uploadResume.js";
 import { Resend } from "resend";
 import fs from "fs";
 
@@ -18,7 +18,7 @@ export const createApplication = async (req, res) => {
   try {
     console.log("[ApplicationController] INFO: Uploading resume to Cloudinary");
     if (req.file) {
-      const uploadResult = await uploadResumeToCloudinary(req.file.path);
+      const uploadResult = await uploadToCloudinary (req.file.path, "resumes");
       resUrl = uploadResult.url;
       console.log("[ApplicationController] INFO: Resume uploaded successfully");
     }
