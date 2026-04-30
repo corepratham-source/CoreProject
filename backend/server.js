@@ -18,6 +18,7 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import testRoutes from "./routes/testRoutes.js";
 import testInviteRoutes from "./routes/testInviteRoutes.js";
+import reportRoutes from "./routes/reportRoutes.js";
 
 /* ===== APP ===== */
 const app = express();
@@ -66,15 +67,6 @@ const upload = multer({ storage });
 /* =======================
    📊 MODELS (NEW)
 ======================= */
-const reportSchema = new mongoose.Schema({
-  location: String,
-  category: String,
-  profilesAnalyzed: Number,
-  description: String,
-  isTrending: Boolean,
-  link: String,
-  document: String
-});
 
 const leadSchema = new mongoose.Schema({
   name: String,
@@ -184,6 +176,7 @@ app.use("/api/applications", applicationRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/tests", testRoutes);
 app.use("/api/test-invites", testInviteRoutes);
+app.use("/api/reports", reportRoutes);
 
 /* =======================
    ❤️ HEALTH CHECK
