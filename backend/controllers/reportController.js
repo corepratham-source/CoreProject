@@ -1,6 +1,8 @@
 import ReportRequest from "../models/ReportRequest.js";
 import Report from "../models/Reports.js"; // 🔥 NEW
-import { sendMail } from "../services/gmailService.js";
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const requestReport = async (req, res) => {
   try {
@@ -27,7 +29,7 @@ export const requestReport = async (req, res) => {
     });
 
     // 🔥 EMAIL WITH ACTUAL REPORT LINK
-    const emailText = `
+    const emailHtml = `
 Hi ${name},
 
 Here is your requested report:
@@ -43,13 +45,19 @@ If you have any hiring requirements, please go to jobs.careersatcore.com/client 
 
 — CORE Team
     `;
-
-    await sendMail({
-      to: [email],
-      subject: `${report.location} ${report.category} Hiring Report`,
-      text: emailText
-    });
-
+try {
+          await resend.emails.send({
+            from: "Core Team <no-reply@careersatcore.com>",
+            to: [email],
+            subject: `${report.location} ${report.category} Hiring Report`,
+            html: emailHtml
+          });
+        console.log("[ApplicationController] INFO: Match email sent successfully");
+      } catch (err) {
+        console.error("[ApplicationController] ERROR: Failed to send match email:", err.message);
+      }
+    
+    
     res.json({ success: true });
 
   } catch (err) {
