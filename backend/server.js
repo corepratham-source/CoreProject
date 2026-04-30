@@ -74,7 +74,6 @@ const leadSchema = new mongoose.Schema({
   email: String
 });
 
-const Report = mongoose.model("Report", reportSchema);
 const Lead = mongoose.model("Lead", leadSchema);
 
 /* =======================
