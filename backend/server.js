@@ -10,6 +10,7 @@ import path from "path";
 import fs from "fs";
 import jwt from "jsonwebtoken";
 import { uploadToCloudinary } from "./services/uploadResume.js"; 
+import Report from "./models/Reports.js";
 
 /* ===== ROUTES ===== */
 import jobRoutes from "./routes/jobRoutes.js";
@@ -41,7 +42,13 @@ app.use(cors({
   credentials: true
 }));
 
-app.options("*", cors());
+app.options("*", cors({
+  origin: [
+    "http://localhost:5173",
+    "https://jobs.careersatcore.com"
+  ],
+  credentials: true
+}));
 
 /* =======================
    🧱 MIDDLEWARE
@@ -98,10 +105,6 @@ const protectAdmin = (req, res, next) => {
 /* =======================
    📊 REPORT ROUTES (NEW)
 ======================= */
-app.get("/api/reports", async (req, res) => {
-  const reports = await Report.find();
-  res.json(reports);
-});
 
 app.post("/api/leads", async (req, res) => {
   await Lead.create(req.body);
