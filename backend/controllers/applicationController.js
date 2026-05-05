@@ -240,10 +240,17 @@ const emailHtml = `
         console.error("[ApplicationController] ERROR: Failed to send candidate notification email:", err.message);
       }
     }
+    const isCustomerService =
+      candidate.function &&
+      candidate.function.toLowerCase() === "customer service & support";
+
+    const requiresExtraQuestions =
+      isCustomerService && filteredResults.length > 0;
 
     console.log("[ApplicationController] INFO: Returning match results");
     res.json({
       count: results.length,
+      requiresExtraQuestions,
       matches: results.map(r => ({
         jobId: r.job._id,
         title: r.job.title,
@@ -255,6 +262,27 @@ const emailHtml = `
   } catch (err) {
     console.error("[ApplicationController] ERROR: Candidate match error:", err.message);
     console.error("[ApplicationController] STACK:", err.stack);
+    res.status(500).json({ error: err.message });
+  }
+};
+
+export const saveCustomerAnswers = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { inOfficeConfirmed, interviewAvailability } = req.body;
+
+    const application = await Application.findByIdAndUpdate(
+      applicationId,
+      {
+        inOfficeConfirmed,
+        interviewAvailability
+      },
+      { new: true }
+    );
+
+    res.json({ message: "Saved", application });
+
+  } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };

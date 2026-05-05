@@ -13,6 +13,8 @@ const applicationSchema = new mongoose.Schema({
   currentLocation: String,
   pincode: String,
   openToRelocation: Boolean,
+  inOfficeConfirmed: Boolean,
+  interviewAvailability: String,
 
   resumeText: String,
   resumeURL: String,
