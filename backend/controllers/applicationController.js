@@ -245,7 +245,7 @@ const emailHtml = `
       candidate.function.toLowerCase() === "customer service & support";
 
     const requiresExtraQuestions =
-      isCustomerService && filteredResults.length > 0;
+      isCustomerService && results.length > 0;
 
     console.log("[ApplicationController] INFO: Returning match results");
     res.json({
