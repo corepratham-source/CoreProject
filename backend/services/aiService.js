@@ -54,7 +54,13 @@ ${text}
       });
 
       const content = response.choices[0].message.content;
-      return JSON.parse(content);
+
+      const clean = content
+        .replace(/```json/g, "")
+        .replace(/```/g, "")
+        .trim();
+
+      return JSON.parse(clean);
 
     } catch (err) {
       console.error(`Model ${model} failed:`, err.message);
